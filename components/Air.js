@@ -1,49 +1,71 @@
 import React, { useState, useEffect } from 'react'
 import { AntDesign } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
+import axios from 'axios'
 import {
   View,
   Text,
   StyleSheet,
   Image,
-  TouchableOpacity,
-  Button,
+  FlatList,
+  ScrollView,
 } from 'react-native'
 
 export default function Air() {
   const [air, setAir] = useState([])
+
+  const proxyurl = 'https://cors-anywhere.herokuapp.com/'
+  useEffect(() => {
+    const fetchAir = async () => {
+      const response = await axios(`${proxyurl}https://api.bgm.tv/calendar`)
+      setAir(response.data[4].items)
+      console.log(response.data)
+    }
+
+    fetchAir()
+  }, [])
 
   const bannerUrl = {
     uri: 'http://lain.bgm.tv/pic/cover/l/83/94/305511_hEOuH.jpg',
   }
 
   return (
-    <View>
+    <ScrollView>
       <View>
         <Text>星期一 今日共上映 12 部动画</Text>
       </View>
-      <View style={styles.card}>
-        <Image style={styles.cardImage} source={bannerUrl} />
-        <View style={styles.cardText}>
-          <Text style={styles.title}>高校之神</Text>
 
-          <View style={styles.rating}>
-            <AntDesign name="staro" size={18} color="#03a9f4" />
-            <Text style={styles.ratingText}>8.9</Text>
-          </View>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>READ MORE</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+      <ScrollView>
+        <FlatList
+          keyExtractor={item => item.id}
+          data={air}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <Image
+                style={styles.cardImage}
+                source={{ uri: item.images.large }}
+              />
+              <View style={styles.cardText}>
+                <Text style={styles.title}>{item.name}</Text>
+
+                <View style={styles.rating}>
+                  <AntDesign name="staro" size={18} color="#03a9f4" />
+                  <Text style={styles.ratingText}>
+                    {item.rating ? item.rating.score : '暂无评分'}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          )}
+        />
+      </ScrollView>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   title: {
-    fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 13,
   },
   card: {
     flexWrap: 'wrap',
@@ -60,6 +82,7 @@ const styles = StyleSheet.create({
   },
   cardText: {
     marginHorizontal: 15,
+    width: '40%',
   },
   rating: {
     flexWrap: 'wrap',
@@ -69,18 +92,6 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     marginHorizontal: 5,
-  },
-  button: {
-    borderColor: '#03a9f4',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 5,
-    backgroundColor: '#03a9f4',
-    marginVertical: 10,
-  },
-  buttonText: {
-    fontSize: 12,
-    color: '#fff',
+    fontSize: 11,
   },
 })
