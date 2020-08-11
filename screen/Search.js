@@ -6,7 +6,6 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Image,
   ImageBackground,
   ScrollView,
   FlatList,
@@ -53,6 +52,14 @@ export default function Search() {
           />
         </View>
 
+        {search.length > 0 && (
+          <View>
+            <Text>
+              共找到{searchLength}条匹配{search}的结果
+            </Text>
+          </View>
+        )}
+
         <FlatList
           keyExtractor={item => item.id}
           data={searchResult}
@@ -62,7 +69,17 @@ export default function Search() {
               style={styles.cardContainer}
               imageStyle={{ opacity: 0.4 }}
             >
-              <Text style={styles.cardType}>动画</Text>
+              <Text style={styles.cardType}>
+                {item.type === 1
+                  ? '书籍'
+                  : item.type === 2
+                  ? '动画'
+                  : item.type === 3
+                  ? '音乐'
+                  : item.type === 4
+                  ? '游戏'
+                  : '真实'}
+              </Text>
               <Text style={styles.cardRank}>
                 Rank{' '}
                 <Text style={styles.cardRankHighlight}>
