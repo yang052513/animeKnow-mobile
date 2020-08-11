@@ -53,9 +53,10 @@ export default function Search() {
         </View>
 
         {search.length > 0 && (
-          <View>
+          <View style={{ marginHorizontal: 15, marginTop: 10 }}>
             <Text>
-              共找到{searchLength}条匹配{search}的结果
+              共找到<Text style={{ fontWeight: 'bold' }}>{searchLength}</Text>
+              条匹配<Text style={{ color: '#03a9f4' }}>{search}</Text>的结果
             </Text>
           </View>
         )}
