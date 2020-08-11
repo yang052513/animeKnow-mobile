@@ -8,16 +8,17 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
+  ScrollView,
+  FlatList,
 } from 'react-native'
 import axios from 'axios'
 
 const proxyurl = 'https://cors-anywhere.herokuapp.com/'
-const imagePath = {
-  uri: 'http://lain.bgm.tv/pic/cover/l/91/d8/84171_5KpYZ.jpg',
-}
 
 export default function Search() {
   const [search, setSearch] = useState('')
+  const [searchLength, setSearchLength] = useState('')
+  const [searchResult, setSearchResult] = useState([])
 
   const handleSearch = value => {
     setSearch(value)
@@ -28,12 +29,13 @@ export default function Search() {
     const requestUrl =
       'https://api.bgm.tv/search/subject/' +
       search +
-      '?responseGroup=large&max_results=5'
+      '?responseGroup=large&max_results=25'
 
     if (search.length > 0) {
       const fetchSearch = async () => {
         const response = await axios(`${proxyurl}${requestUrl}`)
-        console.log(response.data.list)
+        setSearchResult(response.data.list)
+        setSearchLength(response.data.results)
         console.log(response.data.results)
       }
       fetchSearch()
@@ -41,46 +43,59 @@ export default function Search() {
   }, [search])
 
   return (
-    <View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="搜索条目..."
-          style={styles.input}
-          onChangeText={handleSearch}
+    <ScrollView>
+      <View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="搜索条目..."
+            style={styles.input}
+            onChangeText={handleSearch}
+          />
+        </View>
+
+        <FlatList
+          keyExtractor={item => item.id}
+          data={searchResult}
+          renderItem={({ item }) => (
+            <ImageBackground
+              source={{ uri: item.images.large }}
+              style={styles.cardContainer}
+              imageStyle={{ opacity: 0.4 }}
+            >
+              <Text style={styles.cardType}>动画</Text>
+              <Text style={styles.cardRank}>
+                Rank{' '}
+                <Text style={styles.cardRankHighlight}>
+                  {item.rank ? item.rank : '暂无排名'}
+                </Text>
+              </Text>
+
+              <View style={styles.cardInfoWrap}>
+                <View style={styles.cardInfoContainer}>
+                  <Text style={styles.cardTitle}>
+                    {item.name_cn ? item.name_cn : item.name}
+                  </Text>
+                  <View style={styles.cardInfoInnerContainer}>
+                    <View style={styles.cardFlex}>
+                      <MaterialIcons name="live-tv" size={15} color="#fff" />
+                      <Text style={styles.cardText}>{item.eps}话</Text>
+                    </View>
+                    <View style={styles.cardFlex}>
+                      <AntDesign name="staro" size={15} color="#fff" />
+                      <Text style={styles.cardText}>
+                        {item.rating ? item.rating.score : '暂无评分'}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+
+                <Text style={styles.cardDesc}>{item.summary.slice(0, 55)}</Text>
+              </View>
+            </ImageBackground>
+          )}
         />
       </View>
-
-      <ImageBackground
-        source={imagePath}
-        style={styles.cardContainer}
-        imageStyle={{ opacity: 0.6 }}
-      >
-        <Text style={styles.cardType}>动画</Text>
-        <Text style={styles.cardRank}>
-          Rank <Text style={styles.cardRankHighlight}>129</Text>
-        </Text>
-
-        <View style={styles.cardInfoWrap}>
-          <View style={styles.cardInfoContainer}>
-            <Text style={styles.cardTitle}>排球少年</Text>
-            <View style={styles.cardInfoInnerContainer}>
-              <View style={styles.cardFlex}>
-                <MaterialIcons name="live-tv" size={15} color="#fff" />
-                <Text style={styles.cardText}>25话</Text>
-              </View>
-              <View style={styles.cardFlex}>
-                <AntDesign name="staro" size={15} color="#fff" />
-                <Text style={styles.cardText}>8.2</Text>
-              </View>
-            </View>
-          </View>
-
-          <Text style={styles.cardDesc}>
-            小时候，日向翔阳从电视上看见排球比赛，乌野高中的一名小个子在球上的英姿，简直就是个“小巨人”，对此非常深刻...
-          </Text>
-        </View>
-      </ImageBackground>
-    </View>
+    </ScrollView>
   )
 }
 
