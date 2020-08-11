@@ -14,13 +14,13 @@ export default function Navigator() {
       initialRouteName="Air"
       activeColor="#fff"
       barStyle={{ backgroundColor: '#03a9f4' }}
-      shifting={false}
     >
       <Tab.Screen
         name="Air"
         component={Air}
         options={{
           tabBarLabel: '每日放送',
+          tabBarColor: '#03a9f4',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={24} />
           ),
@@ -31,6 +31,7 @@ export default function Navigator() {
         component={Search}
         options={{
           tabBarLabel: '探索',
+          tabBarColor: '#7a02f2',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="bell" color={color} size={24} />
           ),
@@ -41,6 +42,7 @@ export default function Navigator() {
         component={Recommendation}
         options={{
           tabBarLabel: '推荐',
+          tabBarColor: '#034323',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={24} />
           ),
@@ -51,6 +53,7 @@ export default function Navigator() {
         component={About}
         options={{
           tabBarLabel: '关于',
+          tabBarColor: '#f2023e',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="library" color={color} size={24} />
           ),
