@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { AntDesign } from '@expo/vector-icons'
-import { Feather } from '@expo/vector-icons'
 import axios from 'axios'
 import {
   View,
@@ -11,28 +10,45 @@ import {
   ScrollView,
 } from 'react-native'
 
+const proxyurl = 'https://cors-anywhere.herokuapp.com/'
+const date = new Date()
+let currentWeekday
+
+if (date.getDay === 0) {
+  currentWeekday = 6
+} else {
+  currentWeekday = date.getDay() - 1
+}
+
 export default function Air() {
   const [air, setAir] = useState([])
-
-  const proxyurl = 'https://cors-anywhere.herokuapp.com/'
+  const [dailyInfo, setDailyInfo] = useState({
+    weekday: '',
+    weekdayJA: '',
+    numOfAnime: '',
+  })
   useEffect(() => {
     const fetchAir = async () => {
       const response = await axios(`${proxyurl}https://api.bgm.tv/calendar`)
-      setAir(response.data[4].items)
+      const data = response.data[currentWeekday]
+
+      setAir(data.items)
+      setDailyInfo({
+        weekday: data.weekday.cn,
+        weekdayJA: data.weekday.ja,
+        numOfAnime: data.items.length,
+      })
       console.log(response.data)
     }
-
     fetchAir()
   }, [])
-
-  const bannerUrl = {
-    uri: 'http://lain.bgm.tv/pic/cover/l/83/94/305511_hEOuH.jpg',
-  }
 
   return (
     <ScrollView>
       <View>
-        <Text style={styles.announcement}>星期一 今日共上映 12 部动画</Text>
+        <Text style={styles.announcement}>
+          {dailyInfo.weekday} 今日共上映 {dailyInfo.numOfAnime} 部动画
+        </Text>
       </View>
 
       <ScrollView>
@@ -60,7 +76,6 @@ export default function Air() {
                 </View>
 
                 <View style={styles.rating}>
-                  {/* <AntDesign name="barschart" size={24} color="#03a9f4" /> */}
                   <Text style={styles.rankingText}>
                     Rank {item.rank ? item.rank : '暂无排名'}
                   </Text>
@@ -76,8 +91,10 @@ export default function Air() {
 
 const styles = StyleSheet.create({
   announcement: {
-    margin: 20,
-    fontSize: 18,
+    // margin: 20,
+    marginHorizontal: 15,
+    marginTop: 25,
+    fontSize: 15,
   },
   card: {
     flexWrap: 'wrap',
@@ -85,7 +102,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     marginHorizontal: 15,
     borderBottomWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#d6d6d6',
   },
   cardTitle: {
     fontSize: 13,
@@ -109,7 +126,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 2,
+    marginVertical: 3,
   },
   ratingText: {
     marginHorizontal: 5,
