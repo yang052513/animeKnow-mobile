@@ -32,7 +32,7 @@ export default function Air() {
   return (
     <ScrollView>
       <View>
-        <Text>星期一 今日共上映 12 部动画</Text>
+        <Text style={styles.announcement}>星期一 今日共上映 12 部动画</Text>
       </View>
 
       <ScrollView>
@@ -46,12 +46,23 @@ export default function Air() {
                 source={{ uri: item.images.large }}
               />
               <View style={styles.cardText}>
-                <Text style={styles.title}>{item.name}</Text>
-
+                <Text style={styles.cardTitle}>{item.name}</Text>
+                <Text style={styles.cardCnTitle}>
+                  {item.name_cn && item.name_cn}
+                </Text>
                 <View style={styles.rating}>
                   <AntDesign name="staro" size={18} color="#03a9f4" />
                   <Text style={styles.ratingText}>
-                    {item.rating ? item.rating.score : '暂无评分'}
+                    {item.rating
+                      ? `${item.rating.score} (${item.rating.total}人评分)`
+                      : '暂无评分'}
+                  </Text>
+                </View>
+
+                <View style={styles.rating}>
+                  {/* <AntDesign name="barschart" size={24} color="#03a9f4" /> */}
+                  <Text style={styles.rankingText}>
+                    Rank {item.rank ? item.rank : '暂无排名'}
                   </Text>
                 </View>
               </View>
@@ -64,8 +75,9 @@ export default function Air() {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 13,
+  announcement: {
+    margin: 20,
+    fontSize: 18,
   },
   card: {
     flexWrap: 'wrap',
@@ -74,6 +86,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     borderBottomWidth: 1,
     borderColor: 'gray',
+  },
+  cardTitle: {
+    fontSize: 13,
+    marginBottom: 2,
+  },
+  cardCnTitle: {
+    fontSize: 10,
+    color: 'gray',
+    marginBottom: 5,
   },
   cardImage: {
     width: '50%',
@@ -88,10 +109,17 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 5,
+    marginVertical: 2,
   },
   ratingText: {
     marginHorizontal: 5,
     fontSize: 11,
+  },
+  rankingText: {
+    fontSize: 11,
+    color: '#fff',
+    backgroundColor: '#03a9f4',
+    padding: 4,
+    borderRadius: 5,
   },
 })
