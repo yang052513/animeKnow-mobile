@@ -1,21 +1,19 @@
 import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
 import { StyleSheet, Text, View } from 'react-native'
-import Search from './components/Search'
+import Navigator from './components/Navigator'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>AnimeKnow</Text>
-
-      <View>
-        <Search />
-      </View>
-    </View>
+    <NavigationContainer>
+      <Navigator />
+    </NavigationContainer>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',

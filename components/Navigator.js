@@ -1,0 +1,61 @@
+import React from 'react'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import Air from './Air'
+import Search from './Search'
+import Recommendation from './Recommendation'
+import About from './About'
+
+const Tab = createMaterialBottomTabNavigator()
+
+export default function Navigator() {
+  return (
+    <Tab.Navigator
+      initialRouteName="Air"
+      activeColor="#fff"
+      barStyle={{ backgroundColor: '#03a9f4' }}
+      shifting={false}
+    >
+      <Tab.Screen
+        name="Air"
+        component={Air}
+        options={{
+          tabBarLabel: '每日放送',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{
+          tabBarLabel: '探索',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="bell" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Recommendation"
+        component={Recommendation}
+        options={{
+          tabBarLabel: '推荐',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="About"
+        component={About}
+        options={{
+          tabBarLabel: '关于',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="library" color={color} size={24} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  )
+}
