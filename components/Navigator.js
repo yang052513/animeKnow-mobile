@@ -11,7 +11,7 @@ const Tab = createMaterialBottomTabNavigator()
 export default function Navigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Air"
+      initialRouteName="Search"
       activeColor="#fff"
       barStyle={{ backgroundColor: '#03a9f4' }}
     >
