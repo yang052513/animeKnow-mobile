@@ -6,6 +6,7 @@ import About from '../screen/About'
 import AirStack from '../screen/Air/AirStack'
 import SearchStack from '../screen/Search/SearchStack'
 import RecommendationStack from '../screen/Recommendation/RecommendationStack'
+import Subject from '../components/Subject'
 
 const Tab = createMaterialBottomTabNavigator()
 
@@ -18,7 +19,7 @@ export default function Navigator() {
     >
       <Tab.Screen
         name="Air"
-        component={AirStack}
+        component={Subject}
         options={{
           tabBarLabel: '每日放送',
           tabBarColor: '#03a9f4',

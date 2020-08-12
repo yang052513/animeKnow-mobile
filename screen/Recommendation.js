@@ -31,6 +31,7 @@ export default function Recommendation({ navigation }) {
     }
     fetchSubject()
     console.log(card)
+    console.log(requestUrl)
   }, [subjectId])
 
   const handleSwipe = () => {
