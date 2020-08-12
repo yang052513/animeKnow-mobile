@@ -4,6 +4,7 @@ import { AntDesign } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
 import AnimeData from '../assets/data/top_500_animes.json'
 import axios from 'axios'
+import SwipeCards from 'react-native-swipe-cards'
 
 const imageDemo = {
   uri: 'http://lain.bgm.tv/pic/cover/l/aa/db/262940_z2mQQ.jpg',
@@ -16,80 +17,98 @@ export default function Search() {
     AnimeData[Math.floor(Math.random() * AnimeData.length)].id
 
   const [subjectId, setSubjectId] = useState(randomInitialId)
-  const [card, setCard] = useState('')
+  const [card, setCard] = useState([])
   const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     const requestUrl =
       'https://api.bgm.tv/subject/' + subjectId + '?responseGroup=small'
 
     const fetchSubject = async () => {
       const response = await axios(`${proxyurl}${requestUrl}`)
-      setCard(response.data)
+      setCard([response.data])
       setLoading(false)
     }
     fetchSubject()
+    console.log(card)
   }, [subjectId])
 
-  console.log(card)
+  const handleYup = () => {
+    setSubjectId(AnimeData[Math.floor(Math.random() * AnimeData.length)].id)
+    setLoading(true)
+    console.log(`滑动`)
+  }
 
   return (
     <View style={styles.container}>
       {loading ? (
         <Text>加载中...</Text>
       ) : (
-        <View style={styles.card}>
-          <View style={styles.bannerContainer}>
-            <Image source={{ uri: card.images.large }} style={styles.banner} />
-            <Text style={styles.rank}>Rank {card.rank}</Text>
-          </View>
-
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>
-              {card.name_cn ? card.name_cn : card.name}
-            </Text>
-            <View style={styles.headerStatus}>
-              <View style={styles.headerItem}>
-                <MaterialIcons name="live-tv" size={18} color="#03a9f4" />
-                <Text style={{ fontSize: 12, marginLeft: 5 }}>
-                  {card.eps ? card.eps : 1} 话
-                </Text>
+        <SwipeCards
+          cards={card}
+          handleYup={handleYup}
+          renderCard={cardData => (
+            <View style={styles.card}>
+              <View style={styles.bannerContainer}>
+                <Image
+                  source={{ uri: card[0].images.large }}
+                  style={styles.banner}
+                />
+                <Text style={styles.rank}>Rank {card[0].rank}</Text>
               </View>
-              <View style={styles.headerItem}>
-                <AntDesign name="staro" size={18} color="#03a9f4" />
-                <Text style={{ fontSize: 12, marginLeft: 5 }}>
-                  {card.rating
-                    ? `${card.rating.score} (${card.rating.total}人评分)`
-                    : '暂无评分'}
+
+              <View style={styles.header}>
+                <Text style={styles.headerTitle}>
+                  {card[0].name_cn ? card[0].name_cn : card[0].name}
+                </Text>
+                <View style={styles.headerStatus}>
+                  <View style={styles.headerItem}>
+                    <MaterialIcons name="live-tv" size={18} color="#03a9f4" />
+                    <Text style={{ fontSize: 12, marginLeft: 5 }}>
+                      {card[0].eps ? card[0].eps : 1} 话
+                    </Text>
+                  </View>
+                  <View style={styles.headerItem}>
+                    <AntDesign name="staro" size={18} color="#03a9f4" />
+                    <Text style={{ fontSize: 12, marginLeft: 5 }}>
+                      {card[0].rating
+                        ? `${card[0].rating.score} (${card[0].rating.total}人评分)`
+                        : '暂无评分'}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              <Text style={styles.desc}>
+                简介:{' '}
+                {card[0].summary
+                  ? `${card[0].summary.replace(/\s/g, '').slice(0, 80)}......`
+                  : '暂无简介'}
+              </Text>
+
+              <View style={styles.collectionContainer}>
+                <Text style={styles.wish}>
+                  想看 {card[0].collection.wish ? card[0].collection.wish : 0}
+                </Text>
+                <Text style={styles.watched}>
+                  看过{' '}
+                  {card[0].collection.collect ? card[0].collection.collect : 0}
+                </Text>
+                <Text style={styles.watching}>
+                  在看 {card[0].collection.doing ? card[0].collection.doing : 0}
+                </Text>
+                <Text style={styles.delay}>
+                  搁置{' '}
+                  {card[0].collection.on_hold ? card[0].collection.on_hold : 0}
+                </Text>
+                <Text style={styles.delete}>
+                  抛弃{' '}
+                  {card[0].collection.dropped ? card[0].collection.dropped : 0}
                 </Text>
               </View>
             </View>
-          </View>
-
-          <Text style={styles.desc}>
-            简介:{' '}
-            {card.summary
-              ? `${card.summary.replace(/\s/g, '').slice(0, 80)}......`
-              : '暂无简介'}
-          </Text>
-
-          <View style={styles.collectionContainer}>
-            <Text style={styles.wish}>
-              想看 {card.collection.wish ? card.collection.wish : 0}
-            </Text>
-            <Text style={styles.watched}>
-              看过 {card.collection.collect ? card.collection.collect : 0}
-            </Text>
-            <Text style={styles.watching}>
-              在看 {card.collection.doing ? card.collection.doing : 0}
-            </Text>
-            <Text style={styles.delay}>
-              搁置 {card.collection.on_hold ? card.collection.on_hold : 0}
-            </Text>
-            <Text style={styles.delete}>
-              抛弃 {card.collection.dropped ? card.collection.dropped : 0}
-            </Text>
-          </View>
-        </View>
+          )}
+        />
       )}
     </View>
   )
