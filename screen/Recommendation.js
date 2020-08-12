@@ -44,34 +44,34 @@ export default function Recommendation({ navigation }) {
       {loading ? (
         <Text>加载中...</Text>
       ) : (
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Subject', card[0].id)}
-        >
-          <SwipeCards
-            cards={card}
-            handleYup={handleSwipe}
-            handleNope={handleSwipe}
-            handleMaybe={handleSwipe}
-            yupText={'喜欢这个'}
-            nopeText={'不再推荐'}
-            yupStyle={{
-              borderColor: '#03a9f4',
-              padding: 10,
-              backgroundColor: '#03a9f4',
-            }}
-            yupTextStyle={{
-              color: '#fff',
-            }}
-            nopeStyle={{
-              borderColor: '#f43b03',
-              padding: 10,
-              backgroundColor: '#f43b03',
-            }}
-            nopeTextStyle={{
-              color: '#fff',
-            }}
-            showMaybe={false}
-            renderCard={cardData => (
+        <SwipeCards
+          cards={card}
+          handleYup={handleSwipe}
+          handleNope={handleSwipe}
+          handleMaybe={handleSwipe}
+          yupText={'喜欢这个'}
+          nopeText={'不再推荐'}
+          yupStyle={{
+            borderColor: '#03a9f4',
+            padding: 10,
+            backgroundColor: '#03a9f4',
+          }}
+          yupTextStyle={{
+            color: '#fff',
+          }}
+          nopeStyle={{
+            borderColor: '#f43b03',
+            padding: 10,
+            backgroundColor: '#f43b03',
+          }}
+          nopeTextStyle={{
+            color: '#fff',
+          }}
+          showMaybe={false}
+          renderCard={cardData => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Subject', card[0].id)}
+            >
               <View style={styles.card}>
                 <View style={styles.bannerContainer}>
                   <Image
@@ -138,9 +138,9 @@ export default function Recommendation({ navigation }) {
                   </Text>
                 </View>
               </View>
-            )}
-          />
-        </TouchableOpacity>
+            </TouchableOpacity>
+          )}
+        />
       )}
     </View>
   )
