@@ -11,7 +11,8 @@ import {
 import { MaterialIcons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 import axios from 'axios'
-import { BarChart, XAxis } from 'react-native-svg-charts'
+import { BarChart, XAxis, PieChart } from 'react-native-svg-charts'
+import CollectionPieChart from './CollectionPieChart'
 
 // const proxyurl = 'https://cors-anywhere.herokuapp.com/'
 const data = [74, 15, 17, 54, 129, 471, 1333, 3058, 3195, 2329]
@@ -334,6 +335,55 @@ export default function Subject() {
     },
   ]
 
+  const collection = [
+    {
+      key: 'wish',
+      amount: 1563,
+      svg: { fill: '#ffadd1' },
+    },
+    {
+      key: 'collect',
+      amount: 13959,
+      svg: { fill: '#87b3cb' },
+    },
+    {
+      key: 'doing',
+      amount: 485,
+      svg: { fill: '#ffadad' },
+    },
+    {
+      key: 'on_hold',
+      amount: 523,
+      svg: { fill: '#d3adff' },
+    },
+    {
+      key: 'dropped',
+      amount: 190,
+      svg: { fill: '#7e7e7e' },
+    },
+  ]
+
+  const Labels = ({ slices, height, width }) => {
+    return slices.map((slice, index) => {
+      const { labelCentroid, pieCentroid, data } = slice
+      return (
+        <Text
+          key={index}
+          x={pieCentroid[0]}
+          y={pieCentroid[1]}
+          fill={'black'}
+          textAnchor={'middle'}
+          alignmentBaseline={'middle'}
+          fontSize={14}
+          stroke={'black'}
+          strokeWidth={0.2}
+        >
+          {data.amount}
+        </Text>
+      )
+    })
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -415,6 +465,8 @@ export default function Subject() {
                 <Text>搁置 524</Text>
                 <Text>抛弃 190</Text>
               </View>
+
+              <CollectionPieChart />
 
               <View>
                 <Text>声优角色表</Text>
