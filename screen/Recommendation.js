@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
 import AnimeData from '../assets/data/top_500_animes.json'
@@ -12,7 +12,7 @@ const imageDemo = {
 
 const proxyurl = 'https://cors-anywhere.herokuapp.com/'
 
-export default function Search() {
+export default function Recommendation({ navigation }) {
   let randomInitialId =
     AnimeData[Math.floor(Math.random() * AnimeData.length)].id
 
@@ -44,92 +44,103 @@ export default function Search() {
       {loading ? (
         <Text>加载中...</Text>
       ) : (
-        <SwipeCards
-          cards={card}
-          handleYup={handleSwipe}
-          handleNope={handleSwipe}
-          handleMaybe={handleSwipe}
-          yupText={'喜欢这个'}
-          nopeText={'不再推荐'}
-          yupStyle={{
-            borderColor: '#03a9f4',
-            padding: 10,
-            backgroundColor: '#03a9f4',
-          }}
-          yupTextStyle={{
-            color: '#fff',
-          }}
-          nopeStyle={{
-            borderColor: '#f43b03',
-            padding: 10,
-            backgroundColor: '#f43b03',
-          }}
-          nopeTextStyle={{
-            color: '#fff',
-          }}
-          showMaybe={false}
-          renderCard={cardData => (
-            <View style={styles.card}>
-              <View style={styles.bannerContainer}>
-                <Image
-                  source={{ uri: card[0].images.large }}
-                  style={styles.banner}
-                />
-                <Text style={styles.rank}>Rank {card[0].rank}</Text>
-              </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Subject', card[0].id)}
+        >
+          <SwipeCards
+            cards={card}
+            handleYup={handleSwipe}
+            handleNope={handleSwipe}
+            handleMaybe={handleSwipe}
+            yupText={'喜欢这个'}
+            nopeText={'不再推荐'}
+            yupStyle={{
+              borderColor: '#03a9f4',
+              padding: 10,
+              backgroundColor: '#03a9f4',
+            }}
+            yupTextStyle={{
+              color: '#fff',
+            }}
+            nopeStyle={{
+              borderColor: '#f43b03',
+              padding: 10,
+              backgroundColor: '#f43b03',
+            }}
+            nopeTextStyle={{
+              color: '#fff',
+            }}
+            showMaybe={false}
+            renderCard={cardData => (
+              <View style={styles.card}>
+                <View style={styles.bannerContainer}>
+                  <Image
+                    source={{ uri: card[0].images.large }}
+                    style={styles.banner}
+                  />
+                  <Text style={styles.rank}>Rank {card[0].rank}</Text>
+                </View>
 
-              <View style={styles.header}>
-                <Text style={styles.headerTitle}>
-                  {card[0].name_cn ? card[0].name_cn : card[0].name}
-                </Text>
-                <View style={styles.headerStatus}>
-                  <View style={styles.headerItem}>
-                    <MaterialIcons name="live-tv" size={18} color="#03a9f4" />
-                    <Text style={{ fontSize: 12, marginLeft: 5 }}>
-                      {card[0].eps ? card[0].eps : 1} 话
-                    </Text>
-                  </View>
-                  <View style={styles.headerItem}>
-                    <AntDesign name="staro" size={18} color="#03a9f4" />
-                    <Text style={{ fontSize: 12, marginLeft: 5 }}>
-                      {card[0].rating
-                        ? `${card[0].rating.score} (${card[0].rating.total}人评分)`
-                        : '暂无评分'}
-                    </Text>
+                <View style={styles.header}>
+                  <Text style={styles.headerTitle}>
+                    {card[0].name_cn ? card[0].name_cn : card[0].name}
+                  </Text>
+                  <View style={styles.headerStatus}>
+                    <View style={styles.headerItem}>
+                      <MaterialIcons name="live-tv" size={18} color="#03a9f4" />
+                      <Text style={{ fontSize: 12, marginLeft: 5 }}>
+                        {card[0].eps ? card[0].eps : 1} 话
+                      </Text>
+                    </View>
+                    <View style={styles.headerItem}>
+                      <AntDesign name="staro" size={18} color="#03a9f4" />
+                      <Text style={{ fontSize: 12, marginLeft: 5 }}>
+                        {card[0].rating
+                          ? `${card[0].rating.score} (${card[0].rating.total}人评分)`
+                          : '暂无评分'}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
 
-              <Text style={styles.desc}>
-                简介:{' '}
-                {card[0].summary
-                  ? `${card[0].summary.replace(/\s/g, '').slice(0, 80)}......`
-                  : '暂无简介'}
-              </Text>
+                <Text style={styles.desc}>
+                  简介:{' '}
+                  {card[0].summary
+                    ? `${card[0].summary.replace(/\s/g, '').slice(0, 80)}......`
+                    : '暂无简介'}
+                </Text>
 
-              <View style={styles.collectionContainer}>
-                <Text style={styles.wish}>
-                  想看 {card[0].collection.wish ? card[0].collection.wish : 0}
-                </Text>
-                <Text style={styles.watched}>
-                  看过{' '}
-                  {card[0].collection.collect ? card[0].collection.collect : 0}
-                </Text>
-                <Text style={styles.watching}>
-                  在看 {card[0].collection.doing ? card[0].collection.doing : 0}
-                </Text>
-                <Text style={styles.delay}>
-                  搁置{' '}
-                  {card[0].collection.on_hold ? card[0].collection.on_hold : 0}
-                </Text>
-                <Text style={styles.delete}>
-                  抛弃{' '}
-                  {card[0].collection.dropped ? card[0].collection.dropped : 0}
-                </Text>
+                <View style={styles.collectionContainer}>
+                  <Text style={styles.wish}>
+                    想看 {card[0].collection.wish ? card[0].collection.wish : 0}
+                  </Text>
+                  <Text style={styles.watched}>
+                    看过{' '}
+                    {card[0].collection.collect
+                      ? card[0].collection.collect
+                      : 0}
+                  </Text>
+                  <Text style={styles.watching}>
+                    在看{' '}
+                    {card[0].collection.doing ? card[0].collection.doing : 0}
+                  </Text>
+                  <Text style={styles.delay}>
+                    搁置{' '}
+                    {card[0].collection.on_hold
+                      ? card[0].collection.on_hold
+                      : 0}
+                  </Text>
+                  <Text style={styles.delete}>
+                    抛弃{' '}
+                    {card[0].collection.dropped
+                      ? card[0].collection.dropped
+                      : 0}
+                  </Text>
+                </View>
               </View>
-            </View>
-          )}
-        />
+            )}
+          />
+        </TouchableOpacity>
       )}
     </View>
   )

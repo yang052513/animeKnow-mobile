@@ -1,18 +1,18 @@
 import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Air from '../screen/Air'
-import Search from '../screen/Search'
-import Recommendation from '../screen/Recommendation'
+
 import About from '../screen/About'
 import AirStack from '../screen/Air/AirStack'
+import SearchStack from '../screen/Search/SearchStack'
+import RecommendationStack from '../screen/Recommendation/RecommendationStack'
 
 const Tab = createMaterialBottomTabNavigator()
 
 export default function Navigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Recommendation"
+      initialRouteName="Air"
       activeColor="#fff"
       barStyle={{ backgroundColor: '#03a9f4' }}
     >
@@ -29,7 +29,7 @@ export default function Navigator() {
       />
       <Tab.Screen
         name="Search"
-        component={Search}
+        component={SearchStack}
         options={{
           tabBarLabel: '探索',
           tabBarColor: '#7a02f2',
@@ -40,7 +40,7 @@ export default function Navigator() {
       />
       <Tab.Screen
         name="Recommendation"
-        component={Recommendation}
+        component={RecommendationStack}
         options={{
           tabBarLabel: '推荐',
           tabBarColor: '#21bf98',

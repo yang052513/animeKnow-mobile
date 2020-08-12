@@ -9,6 +9,7 @@ import {
   FlatList,
   ScrollView,
   Button,
+  TouchableOpacity,
 } from 'react-native'
 
 const proxyurl = 'https://cors-anywhere.herokuapp.com/'
@@ -52,42 +53,41 @@ export default function Air({ navigation }) {
         </Text>
       </View>
 
-      <Button
-        onPress={() => navigation.navigate('Subject')}
-        title="查看详细信息"
-      />
-
       <ScrollView>
         <FlatList
           keyExtractor={item => item.id}
           data={air}
           renderItem={({ item }) => (
-            <View style={styles.card}>
-              <Image
-                style={styles.cardImage}
-                source={{ uri: item.images.large }}
-              />
-              <View style={styles.cardText}>
-                <Text style={styles.cardTitle}>{item.name}</Text>
-                <Text style={styles.cardCnTitle}>
-                  {item.name_cn && item.name_cn}
-                </Text>
-                <View style={styles.rating}>
-                  <AntDesign name="staro" size={18} color="#03a9f4" />
-                  <Text style={styles.ratingText}>
-                    {item.rating
-                      ? `${item.rating.score} (${item.rating.total}人评分)`
-                      : '暂无评分'}
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Subject', item.id)}
+            >
+              <View style={styles.card}>
+                <Image
+                  style={styles.cardImage}
+                  source={{ uri: item.images.large }}
+                />
+                <View style={styles.cardText}>
+                  <Text style={styles.cardTitle}>{item.name}</Text>
+                  <Text style={styles.cardCnTitle}>
+                    {item.name_cn && item.name_cn}
                   </Text>
-                </View>
+                  <View style={styles.rating}>
+                    <AntDesign name="staro" size={18} color="#03a9f4" />
+                    <Text style={styles.ratingText}>
+                      {item.rating
+                        ? `${item.rating.score} (${item.rating.total}人评分)`
+                        : '暂无评分'}
+                    </Text>
+                  </View>
 
-                <View style={styles.rating}>
-                  <Text style={styles.rankingText}>
-                    Rank {item.rank ? item.rank : '暂无排名'}
-                  </Text>
+                  <View style={styles.rating}>
+                    <Text style={styles.rankingText}>
+                      Rank {item.rank ? item.rank : '暂无排名'}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
         />
       </ScrollView>

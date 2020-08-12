@@ -9,12 +9,13 @@ import {
   ImageBackground,
   ScrollView,
   FlatList,
+  TouchableOpacity,
 } from 'react-native'
 import axios from 'axios'
 
 const proxyurl = 'https://cors-anywhere.herokuapp.com/'
 
-export default function Search() {
+export default function Search({ navigation }) {
   const [search, setSearch] = useState('')
   const [searchLength, setSearchLength] = useState('')
   const [searchResult, setSearchResult] = useState([])
@@ -65,51 +66,57 @@ export default function Search() {
           keyExtractor={item => item.id}
           data={searchResult}
           renderItem={({ item }) => (
-            <ImageBackground
-              source={{ uri: item.images.large }}
-              style={styles.cardContainer}
-              imageStyle={{ opacity: 0.4 }}
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Subject', item.id)}
             >
-              <Text style={styles.cardType}>
-                {item.type === 1
-                  ? '书籍'
-                  : item.type === 2
-                  ? '动画'
-                  : item.type === 3
-                  ? '音乐'
-                  : item.type === 4
-                  ? '游戏'
-                  : '真实'}
-              </Text>
-              <Text style={styles.cardRank}>
-                Rank{' '}
-                <Text style={styles.cardRankHighlight}>
-                  {item.rank ? item.rank : '暂无排名'}
+              <ImageBackground
+                source={{ uri: item.images.large }}
+                style={styles.cardContainer}
+                imageStyle={{ opacity: 0.4 }}
+              >
+                <Text style={styles.cardType}>
+                  {item.type === 1
+                    ? '书籍'
+                    : item.type === 2
+                    ? '动画'
+                    : item.type === 3
+                    ? '音乐'
+                    : item.type === 4
+                    ? '游戏'
+                    : '真实'}
                 </Text>
-              </Text>
-
-              <View style={styles.cardInfoWrap}>
-                <View style={styles.cardInfoContainer}>
-                  <Text style={styles.cardTitle}>
-                    {item.name_cn ? item.name_cn : item.name}
+                <Text style={styles.cardRank}>
+                  Rank{' '}
+                  <Text style={styles.cardRankHighlight}>
+                    {item.rank ? item.rank : '暂无排名'}
                   </Text>
-                  <View style={styles.cardInfoInnerContainer}>
-                    <View style={styles.cardFlex}>
-                      <MaterialIcons name="live-tv" size={15} color="#fff" />
-                      <Text style={styles.cardText}>{item.eps}话</Text>
-                    </View>
-                    <View style={styles.cardFlex}>
-                      <AntDesign name="staro" size={15} color="#fff" />
-                      <Text style={styles.cardText}>
-                        {item.rating ? item.rating.score : '暂无评分'}
-                      </Text>
+                </Text>
+
+                <View style={styles.cardInfoWrap}>
+                  <View style={styles.cardInfoContainer}>
+                    <Text style={styles.cardTitle}>
+                      {item.name_cn ? item.name_cn : item.name}
+                    </Text>
+                    <View style={styles.cardInfoInnerContainer}>
+                      <View style={styles.cardFlex}>
+                        <MaterialIcons name="live-tv" size={15} color="#fff" />
+                        <Text style={styles.cardText}>{item.eps}话</Text>
+                      </View>
+                      <View style={styles.cardFlex}>
+                        <AntDesign name="staro" size={15} color="#fff" />
+                        <Text style={styles.cardText}>
+                          {item.rating ? item.rating.score : '暂无评分'}
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
 
-                <Text style={styles.cardDesc}>{item.summary.slice(0, 55)}</Text>
-              </View>
-            </ImageBackground>
+                  <Text style={styles.cardDesc}>
+                    {item.summary.slice(0, 55)}
+                  </Text>
+                </View>
+              </ImageBackground>
+            </TouchableOpacity>
           )}
         />
       </View>
