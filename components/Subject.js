@@ -381,7 +381,6 @@ export default function Subject() {
               </View>
 
               {/* 番剧简介 */}
-
               <View style={styles.intro}>
                 <AntDesign name="book" size={20} color="#03a9f4" />
                 <Text style={styles.introText}>
@@ -487,8 +486,71 @@ export default function Subject() {
 
               <CollectionPieChart />
 
-              <View>
-                <Text>声优角色表</Text>
+              {/* 声优列表信息 */}
+              <View style={styles.cvlist}>
+                <Text style={styles.sectionTitle}>角色介绍</Text>
+                <View style={styles.cvitem}>
+                  <Image
+                    source={{
+                      uri:
+                        'http://lain.bgm.tv/pic/crt/l/9c/2b/1007_crt_ZLqlZ.jpg',
+                    }}
+                    style={styles.cvavatar}
+                  />
+                  <View>
+                    <View style={styles.cvactor}>
+                      <Text style={styles.cvactorIcon}>主角</Text>
+                      <Text>岡崎朋也</Text>
+                    </View>
+
+                    <View style={styles.cvactor}>
+                      <Text style={styles.cvactorIcon}>CV</Text>
+                      <Text>中村悠一</Text>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.cvitem}>
+                  <Image
+                    source={{
+                      uri:
+                        'http://lain.bgm.tv/pic/crt/l/9c/2b/1007_crt_ZLqlZ.jpg',
+                    }}
+                    style={styles.cvavatar}
+                  />
+                  <View>
+                    <View style={styles.cvactor}>
+                      <Text style={styles.cvactorIcon}>主角</Text>
+                      <Text>岡崎朋也</Text>
+                    </View>
+
+                    <View style={styles.cvactor}>
+                      <Text style={styles.cvactorIcon}>CV</Text>
+                      <Text>中村悠一</Text>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.cvitem}>
+                  <Image
+                    source={{
+                      uri:
+                        'http://lain.bgm.tv/pic/crt/l/9c/2b/1007_crt_ZLqlZ.jpg',
+                    }}
+                    style={styles.cvavatar}
+                  />
+                  <View>
+                    <View style={styles.cvactor}>
+                      <Text style={styles.cvactorIcon}>主角</Text>
+                      <Text>岡崎朋也</Text>
+                    </View>
+
+                    <View style={styles.cvactor}>
+                      <Text style={styles.cvactorIcon}>CV</Text>
+                      <Text>中村悠一</Text>
+                    </View>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
@@ -501,6 +563,10 @@ export default function Subject() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F5FCFF',
+  },
+  sectionTitle: {
+    fontSize: 17,
+    color: '#03a9f4',
   },
   bannerContainer: {
     justifyContent: 'center',
@@ -578,5 +644,40 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: 5,
+  },
+  cvlist: {
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    marginTop: 10,
+  },
+  cvitem: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    marginRight: 10,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#d6d6d6',
+  },
+  cvavatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 10,
+    marginRight: 10,
+  },
+  cvactor: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    marginBottom: 7,
+  },
+  cvactorIcon: {
+    backgroundColor: '#fff',
+    color: '#03a9f4',
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+    fontSize: 10,
+    borderRadius: 5,
+    marginRight: 5,
+    borderWidth: 1,
+    borderColor: '#03a9f4',
   },
 })
