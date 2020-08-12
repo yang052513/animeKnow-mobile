@@ -8,6 +8,7 @@ import {
   Image,
   FlatList,
   ScrollView,
+  Button,
 } from 'react-native'
 
 const proxyurl = 'https://cors-anywhere.herokuapp.com/'
@@ -20,7 +21,7 @@ if (date.getDay === 0) {
   currentWeekday = date.getDay() - 1
 }
 
-export default function Air() {
+export default function Air({ navigation }) {
   const [air, setAir] = useState([])
   const [dailyInfo, setDailyInfo] = useState({
     weekday: '',
@@ -50,6 +51,11 @@ export default function Air() {
           {dailyInfo.weekday} 今日共上映 {dailyInfo.numOfAnime} 部动画
         </Text>
       </View>
+
+      <Button
+        onPress={() => navigation.navigate('Subject')}
+        title="查看详细信息"
+      />
 
       <ScrollView>
         <FlatList

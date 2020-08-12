@@ -33,10 +33,10 @@ export default function Search() {
     console.log(card)
   }, [subjectId])
 
-  const handleYup = () => {
+  const handleSwipe = () => {
     setSubjectId(AnimeData[Math.floor(Math.random() * AnimeData.length)].id)
     setLoading(true)
-    console.log(`滑动`)
+    console.log(`喜欢这个动画`)
   }
 
   return (
@@ -46,7 +46,28 @@ export default function Search() {
       ) : (
         <SwipeCards
           cards={card}
-          handleYup={handleYup}
+          handleYup={handleSwipe}
+          handleNope={handleSwipe}
+          handleMaybe={handleSwipe}
+          yupText={'喜欢这个'}
+          nopeText={'不再推荐'}
+          yupStyle={{
+            borderColor: '#03a9f4',
+            padding: 10,
+            backgroundColor: '#03a9f4',
+          }}
+          yupTextStyle={{
+            color: '#fff',
+          }}
+          nopeStyle={{
+            borderColor: '#f43b03',
+            padding: 10,
+            backgroundColor: '#f43b03',
+          }}
+          nopeTextStyle={{
+            color: '#fff',
+          }}
+          showMaybe={false}
           renderCard={cardData => (
             <View style={styles.card}>
               <View style={styles.bannerContainer}>
@@ -148,10 +169,6 @@ const styles = StyleSheet.create({
   banner: {
     height: 400,
     borderRadius: 25,
-    // borderTopLeftRadius: 25,
-    // borderTopRightRadius: 25,
-    // borderBottomLeftRadius: 100,
-    // marginBottom: 20,
   },
   rank: {
     position: 'absolute',
