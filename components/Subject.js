@@ -380,6 +380,14 @@ export default function Subject() {
                 <Text style={styles.subtitle}>食戟のソーマ 神ノ皿</Text>
               </View>
 
+              {/* 番剧简介 */}
+
+              <View style={styles.intro}>
+                <AntDesign name="book" size={20} color="#03a9f4" />
+                <Text style={styles.introText}>
+                  CLANNAD的男主角——冈崎朋也，是一个拒绝与家人交流、不愿留在家里的人。在他幼年时，母亲因故去世……父亲因此整日借酒消愁，原本应该相依为命的两人，却因为不愿去理解对方的痛苦而互相疏远，生活渐渐颓废下来。最终在他初中时，因为一次家庭暴力，而使得父子俩的关系落到了谷底。从此以后，朋也与父亲行同陌路，两人的关系似乎只能在血缘和法律上得以维持......
+                </Text>
+              </View>
               {/* 番剧话数信息 */}
               <FlatList
                 numColumns={6}
@@ -525,6 +533,17 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     marginLeft: 10,
     marginTop: 4,
+  },
+  intro: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  introText: {
+    width: '90%',
+    color: '#4a4a4a',
+    marginLeft: 5,
+    lineHeight: '1.3rem',
   },
   episode: {
     backgroundColor: '#fff',
