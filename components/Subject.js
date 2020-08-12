@@ -11,8 +11,10 @@ import {
 import { MaterialIcons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 import axios from 'axios'
+import { BarChart, XAxis } from 'react-native-svg-charts'
 
 // const proxyurl = 'https://cors-anywhere.herokuapp.com/'
+const data = [74, 15, 17, 54, 129, 471, 1333, 3058, 3195, 2329]
 
 export default function Subject() {
   // const subjectId = props.route.params
@@ -331,6 +333,7 @@ export default function Subject() {
       status: 'Air',
     },
   ]
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -370,8 +373,41 @@ export default function Subject() {
                 <Text style={styles.airDateText}>首播 2007-10-04</Text>
               </View>
 
-              <Text>评分 8.4 用bar chart</Text>
-              <Text>排名 53</Text>
+              <View style={styles.airDate}>
+                <AntDesign name="linechart" size={20} color="#03a9f4" />
+                <Text style={styles.airDateText}>排名 53 </Text>
+              </View>
+
+              <View style={styles.airDate}>
+                <AntDesign name="staro" size={20} color="#03a9f4" />
+                <Text style={styles.airDateText}>评分 8.4 (共10675人评分)</Text>
+              </View>
+
+              <View
+                style={{
+                  height: 200,
+                  padding: 10,
+                }}
+              >
+                <BarChart
+                  style={{ flex: 1 }}
+                  data={data}
+                  gridMin={0}
+                  svg={{ fill: '#03a9f4' }}
+                />
+
+                <XAxis
+                  style={{
+                    marginTop: 10,
+                    fontSize: 11,
+                    paddingHorizontal: 5,
+                  }}
+                  data={data}
+                  formatLabel={(value, index) => index}
+                  contentInset={{ left: 10, right: 10 }}
+                />
+              </View>
+
               <View>
                 <Text>想看 1563</Text>
                 <Text>看过 13953</Text>
@@ -444,6 +480,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 5,
   },
   airDateText: {
     marginLeft: 5,
