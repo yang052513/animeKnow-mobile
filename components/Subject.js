@@ -19,15 +19,15 @@ import RatingBarChart from './RatingBarChart'
 
 const proxyurl = 'https://cors-anywhere.herokuapp.com/'
 
-export default function Subject() {
-  // const subjectId = props.route.params
+export default function Subject(props) {
+  const subjectId = props.route.params
   const [subject, setSubject] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchSubject = async () => {
       const response = await axios(
-        `${proxyurl}https://api.bgm.tv/subject/51?responseGroup=large`
+        `${proxyurl}https://api.bgm.tv/subject/${subjectId}?responseGroup=large`
       )
       setSubject(response.data)
       setLoading(false)
@@ -109,7 +109,7 @@ export default function Subject() {
               </View>
 
               {/* 评分分布图 */}
-              <RatingBarChart ratingData={subject.rating} />
+              {subject.rating && <RatingBarChart ratingData={subject.rating} />}
 
               {/* 收集分布 */}
               <Collection collectionData={subject.collection} />
@@ -117,34 +117,39 @@ export default function Subject() {
               {/* 声优列表信息 */}
               <View style={styles.cvlist}>
                 <Text style={styles.sectionTitle}>角色介绍</Text>
+                {subject.crt === null ? (
+                  <Text>暂无介绍</Text>
+                ) : (
+                  <FlatList
+                    keyExtractor={item => item.id}
+                    data={subject.crt}
+                    renderItem={({ item }) => (
+                      <View style={styles.cvitem}>
+                        <Image
+                          source={{
+                            uri: item.images.large,
+                          }}
+                          style={styles.cvavatar}
+                        />
+                        <View>
+                          <View style={styles.cvactor}>
+                            <Text style={styles.cvactorIcon}>
+                              {item.role_name}
+                            </Text>
+                            <Text>
+                              {item.name_cn ? item.name_cn : item.name}
+                            </Text>
+                          </View>
 
-                <FlatList
-                  keyExtractor={item => item.id}
-                  data={subject.crt}
-                  renderItem={({ item }) => (
-                    <View style={styles.cvitem}>
-                      <Image
-                        source={{
-                          uri: item.images.large,
-                        }}
-                        style={styles.cvavatar}
-                      />
-                      <View>
-                        <View style={styles.cvactor}>
-                          <Text style={styles.cvactorIcon}>
-                            {item.role_name}
-                          </Text>
-                          <Text>{item.name_cn ? item.name_cn : item.name}</Text>
-                        </View>
-
-                        <View style={styles.cvactor}>
-                          <Text style={styles.cvactorIcon}>CV</Text>
-                          <Text>{item.info.cv}</Text>
+                          <View style={styles.cvactor}>
+                            <Text style={styles.cvactorIcon}>CV</Text>
+                            <Text>{item.info.cv}</Text>
+                          </View>
                         </View>
                       </View>
-                    </View>
-                  )}
-                />
+                    )}
+                  />
+                )}
               </View>
             </View>
           </View>
@@ -170,6 +175,7 @@ const styles = StyleSheet.create({
     height: 400,
     width: '80%',
     borderRadius: 15,
+    marginTop: 20,
   },
   textContainer: {
     marginHorizontal: 30,
@@ -232,6 +238,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'column',
     marginTop: 10,
+    marginBottom: 30,
   },
   cvitem: {
     flexWrap: 'wrap',

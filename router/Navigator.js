@@ -19,7 +19,7 @@ export default function Navigator() {
     >
       <Tab.Screen
         name="Air"
-        component={Subject}
+        component={AirStack}
         options={{
           tabBarLabel: '每日放送',
           tabBarColor: '#03a9f4',
