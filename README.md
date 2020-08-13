@@ -15,9 +15,10 @@ A mobile version for my previous project AnimeKnow built with React Native. Get 
 
 ## <span id="01">Preview</span>
 
+<p float="left">
 <img src="./assets/subject.gif" height=600 width="auto"/>
 <img src="./assets/swipe.gif" height=600 width="auto"/>
-
+</p>
 #
 
 ## <span id="02">Install</span>
