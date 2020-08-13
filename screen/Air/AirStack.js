@@ -21,7 +21,7 @@ export default function AirStack({ navigation }) {
       <Stack.Screen
         name="Subject"
         component={Subject}
-        options={{ title: '番剧信息' }}
+        options={{ title: '番剧信息', headerTintColor: '#03a9f4' }}
       />
     </Stack.Navigator>
   )

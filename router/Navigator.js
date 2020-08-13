@@ -1,12 +1,12 @@
 import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { AntDesign } from '@expo/vector-icons'
 
 import About from '../screen/About'
 import AirStack from '../screen/Air/AirStack'
 import SearchStack from '../screen/Search/SearchStack'
 import RecommendationStack from '../screen/Recommendation/RecommendationStack'
-import Subject from '../components/Subject'
 
 const Tab = createMaterialBottomTabNavigator()
 
@@ -24,7 +24,7 @@ export default function Navigator() {
           tabBarLabel: '每日放送',
           tabBarColor: '#03a9f4',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={24} />
+            <AntDesign name="calendar" size={24} color={color} />
           ),
         }}
       />
@@ -35,7 +35,7 @@ export default function Navigator() {
           tabBarLabel: '探索',
           tabBarColor: '#7a02f2',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={24} />
+            <AntDesign name="search1" size={24} color={color} />
           ),
         }}
       />
@@ -46,7 +46,7 @@ export default function Navigator() {
           tabBarLabel: '推荐',
           tabBarColor: '#21bf98',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={24} />
+            <MaterialCommunityIcons name="cards" color={color} size={24} />
           ),
         }}
       />
