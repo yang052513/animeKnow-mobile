@@ -11,15 +11,12 @@ A mobile version for my previous project AnimeKnow built with React Native. Get 
 - [Features](#03)
 - [API and Library](#04)
 
-#
-
 ## <span id="01">Preview</span>
 
 <p float="left">
 <img src="./assets/subject.gif" height=600 width="auto"/>
 <img src="./assets/swipe.gif" height=600 width="auto"/>
 </p>
-#
 
 ## <span id="02">Install</span>
 
@@ -48,8 +45,6 @@ Or running on a IOS simulator
 expo start --ios
 ```
 
-#
-
 ## <span id="03">Features</span>
 
 - Fetch the latest air animations list
@@ -57,8 +52,6 @@ expo start --ios
 - Data visiualization by analyizing collection distribution and rating scores
 - Dont know what to watch? Recommendation feature push the top rank and high rating score animations for you
 - Swipe card effect to like or dislike the recommendation
-
-#
 
 ## <span id="04">API and Library</span>
 
